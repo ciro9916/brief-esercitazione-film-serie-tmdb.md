@@ -1,17 +1,14 @@
-import {chiamataApi} from "./api.js"
-import type {Show} from "./type.js"
-import {ordina3FilmMax,reportTreFilm,reportEpisodi} from "./logic.js"
+import { chiamataApi } from "./api.js"
+import { reportTreFilm, reportEpisodi } from "./logic.js"
 
-const main = async() =>{
-      const spettacoli:Show[]=await chiamataApi()
+const main = async () => {
+    const spettacoli = await chiamataApi()
 
-      const lista1=ordina3FilmMax(spettacoli,true)
-      const lista2=ordina3FilmMax(spettacoli,false)
+    const report1 = reportTreFilm(spettacoli)
+    const report2 = await reportEpisodi(report1.all_time.classifica)
 
-      console.log(reportTreFilm(spettacoli))
-
-      console.log(reportEpisodi(lista1))
-      console.log(reportEpisodi(lista2))
-
+    console.log(JSON.stringify(report1, null, 2))
+    console.log(JSON.stringify(report2, null, 2))
 }
 
+main()
